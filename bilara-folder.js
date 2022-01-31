@@ -32,8 +32,8 @@ export const FilesOfBook={
     dn2:["dn/dn1[456789]_","dn/dn2[0123]_"],
     dn3:["dn/dn2[456789]_","dn/dn3[01234]_"],
     mn1:["mn/mn?_","mn/mn[1234]?_","mn/mn50_?"], //need a wildcard in 50_? for match whole file
-    mn2:["mn/mn[56789]?_","mn/mn100_?"],
-    mn3:["mn/mn1??_"],
+    mn2:["mn/mn5[123456789]_","mn/mn[6789]?_","mn/mn100?"],
+    mn3:["mn/mn10[123456789]_","mn/mn1[12345][0123456789]"],
     sn1:["sn/sn?$","sn/sn1[10]$"] ,
     sn2:["sn/sn1[23456789]","sn/sn2[01]$"] ,
     sn3:["sn/sn2[23456789]$","sn/sn3[01234]$"] ,
@@ -52,7 +52,7 @@ export const pitakaOf=id=>{
 
 const BookPrefix={
     vin:"pj,pc,mv,cv,pvr",
-    mn:"mn1,mn2,mn3",
+    dn:"dn1,dn2,dn3",
     mn:"mn1,mn2,mn3",
     sn:"sn1,sn2,sn3,sn4,sn5",//match subfolder 
     an:"an1,an2,an3,an4,an5,an6,an7,an8,an9,an10,an11",

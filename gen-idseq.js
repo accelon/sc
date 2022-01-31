@@ -4,7 +4,7 @@ import { combineJSON, filesOfBook,pitakaOf,booksOf } from './bilara-folder.js';
 await nodefs
 const bilara_folder='../../github/bilara-data/';
 const desfolder='idseq/';
-const pat=process.argv[2]||"dn1";
+const pat=process.argv[2]||"mn";
 
 const pitaka=pitakaOf(pat);
 const datafolder=bilara_folder+'root/pli/ms/'+pitaka+'/';   
