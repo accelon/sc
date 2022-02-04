@@ -1,10 +1,10 @@
-{
-    "name":"sc",
-    "title": "Tipitaka in English|sc",
+﻿{
+    "name":"sc-pli",
+    "title": "Tipitaka in Pali|sc",
     "description":"from SuttaCentral",
     "license": "CC0",
     "cluster":"c",
-    "lang":"en",
+    "lang":"pli",
     "locator":"bk.n",
     "textOnly":true,
     "removeLabels":"sc",
@@ -15,6 +15,6 @@
             "n":["LabelMilestone",{"sequencial":true,"range":true}]
     },
     "homepage":"https://github.com/accelon/cs",
-    "rootdir":"en/",
+    "rootdir":"pli/",
     "files":"dn?.off"
 }

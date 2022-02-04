@@ -37,5 +37,4 @@ books.forEach(book=>{
     if (writeChanged('msdiv/'+book+'.json',JSON.stringify(msdivs,'', ' '))) {
         console.log('written',book,Object.keys(msdivs).length,'items')
     }
-    console.log(msdivs["mn75:25.3"])
 })

@@ -1,4 +1,5 @@
 
+import { fromIAST } from 'provident-pali';
 import Breakseg from  './breakseg.js';
 const knowngap={
 	'an4.107:1.1':true, // VRI missing an4.106
@@ -8,10 +9,10 @@ const knowngap={
 'sn50.45-54:1.1':true,'sn50.89-98:1.1':true,'sn51.77-86:1.1':true,'sn53.45-54:1.1':true,
 }
 const breakseg=(lang,text,id)=>{
-    if (!text)return null;
+    if (!text)return -1;
     if (Breakseg[id]) {
         const {pli,en}=Breakseg[id];
-        const t=pli;
+        let t=pli;
         if (lang==='en') t=en;
         const at=text.indexOf(t);
         if (at>-1) {
@@ -22,6 +23,9 @@ const breakseg=(lang,text,id)=>{
     }
     return -1;
 }
+const toProvident=(str,lang)=>{
+    return lang==='pli'?fromIAST(str):str;
+}
 export const bilara2offtext=(lang,idseq,bookjson,msdivs,inserts)=>{
     let offtext='';
     for (let i=0;i<idseq.length;i++) {
@@ -30,18 +34,29 @@ export const bilara2offtext=(lang,idseq,bookjson,msdivs,inserts)=>{
         for (let i=0;i<idarr.length;i++) {
             const id=idarr[i];
 
-            let text=bookjson[id];
+            let text=bookjson[id]||'';
+            if (!text) {
+                //no translation
+            }
+            if (lang=='pli') {
+                text=text.replace(/n([’”]+)ti/g,'$1nti');
+            }
             const msdiv=msdivs[id]||'';
-            const insert=inserts[id]||'';
-            const addition=insert+(msdiv?'^n'+msdiv:'');
+            let insert=inserts[id]||'';
+            if (insert) insert='^sc#'+id+insert;
+            let addition=insert+(msdiv?'^n'+msdiv:'');
 
             const brkat=breakseg(lang,text,id);//
             if (brkat>-1) {
-                //move to previous line
-                offtext=offtext.substr(0,offtext.length-1)+text.substr(0,brkat)+'\n';
+                //add one more line
+                if (!Breakseg[id].pn&&addition) { // pn moved to first line
+                    offtext+=addition+' ';
+                    addition='';
+                }
+                offtext+= toProvident(text.substr(0,brkat),lang)+'\n';
                 text=text.substr(brkat);
             }
-            line+=(addition?addition+' ':'')+text;
+            line+=(addition?addition+' ':'')+toProvident(text,lang);
         }
         offtext+=line+'\n';
         line='';

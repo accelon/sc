@@ -1,4 +1,6 @@
 export default { //將segment再切分
+  "dn5:5.5":{pli:"upasaṅkamitvā",en:"and said",pn:"331"}, //pn 331 moved to second line
+  "dn10:1.5.1":{pli:"Atha kho subho",en:"Then Subha"}, //pn 448 in first line
   "dn3:2.14.1": { pli:"Ekamantaṁ",en:"and sat",pn:"290",my:""},
   "dn3:2.17.1": { pli:"Ekamantaṁ",en:"he sat",pn:"293",my:""},
   "dn6:5.3":    { pli:"Ekamantaṁ",en:"and sat",pn:"364",my:""},
