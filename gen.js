@@ -25,7 +25,6 @@ export const gen=(pat,lang)=>{
         const msdiv=JSON.parse(fs.readFileSync('msdiv/'+book+'.json','utf8'));
     
         const bookjson=combineJSON(files.map(fn=>datafolder+fn));
-
         const offtext=bilara2offtext(lang,idseq,bookjson,msdiv,inserts);
         if (writeChanged(lang+'/'+book+'.off',offtext)) {
             console.log('written',book,offtext.length)

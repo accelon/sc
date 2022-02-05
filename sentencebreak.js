@@ -6,7 +6,7 @@ await nodefs;
 const cs=await openBasket('cs');
 const sc=await openBasket('sc-pli');
 const sclocators=sc.enumLocators();
-const start=0;
+const start=132;
 const max=sclocators.length;
 
 const removeHeader=str=>{
@@ -22,7 +22,6 @@ for (let i=start;i<max;i++) {
     let pass=false;
     let sclines_o = (await sc.readLoc(sclocators[i]));
     let cslines_o = (await cs.readLoc(sclocators[i]));
-    // console.log(sclines,cslines)
 
     const cslines2=autoBreak(cslines_o);
     const sclines=sclines_o.map(removeHeader);
@@ -36,9 +35,7 @@ for (let i=start;i<max;i++) {
     } 
 
     if (!pass){
-        // console.log('cs',cslines)
         const breakpos=diffBreak(cslines.map(spacify), sclines.map(spacify));
-        // console.log(breakpos)
         const sents=breakSentence(cslines_o.join(' '),breakpos);
         
         const sim=paragraphSimilarity(sclines.map(spacify), sents.map(removeVariantBold).map(removeHeader).map(spacify) );
@@ -48,10 +45,10 @@ for (let i=start;i<max;i++) {
             console.log(sim,i,sclocators[i],breakpos);
             console.log(sclines);
             console.log(cslines);
-            console.log(sents);
+            // console.log(sents);
         }
     }
-    
+    console.log('\r'+`${i} ${sclocators[i]} ${sclines.length} ${cslines.length}`); 
     // sclines=sclines.map(removeHeader).map(spacify);
     // cslines=cslines.map(removeHeader).map(spacify).map(removeVariant);
     // console.log('sc',sclines)

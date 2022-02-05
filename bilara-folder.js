@@ -38,7 +38,7 @@ export const FilesOfBook={
     sn2:["sn/sn1[23456789]","sn/sn2[01]$"] ,
     sn3:["sn/sn2[23456789]$","sn/sn3[01234]$"] ,
     sn4:["sn/sn3[56789]$","sn/sn4[01234]$"] ,
-    sn5:["sn/sn4[56789]$","sn/sn5[012346]$"] ,
+    sn5:["sn/sn4[56789]$","sn/sn5[0123456]$"] ,
     an1:["an/an1$"],an2:["an/an2$"],an3:["an/an3$"],an4:["an/an4$"], an5:["an/an5$"],
     an6:["an/an6$"],an7:["an/an7$"],an8:["an/an8$"],an9:["an/an9$"], an10:["an/an10$"],an11:["an/an11$"],
     dhp:["kn/dhp/*"],iti:["kn/iti/vagg?"],ud:["kn/ud/vagg?"],thag:["kn/thag/*"],thig:["kn/thig/*"],

@@ -7,6 +7,7 @@ const knowngap={
 	'sn45.171:1.1':true,
 	'sn48.115-124:1.1':true,'sn48.169-178:1.1':true,'sn49.23-34:1.1':true,
 'sn50.45-54:1.1':true,'sn50.89-98:1.1':true,'sn51.77-86:1.1':true,'sn53.45-54:1.1':true,
+
 }
 const breakseg=(lang,text,id)=>{
     if (!text)return -1;
@@ -44,7 +45,7 @@ export const bilara2offtext=(lang,idseq,bookjson,msdivs,inserts)=>{
             const msdiv=msdivs[id]||'';
             let insert=inserts[id]||'';
             if (insert) insert='^sc#'+id+insert;
-            let addition=insert+(msdiv?'^n'+msdiv:'');
+            let addition=insert+(msdiv? ((parseInt(msdiv)?'^n':'')+msdiv):'');
 
             const brkat=breakseg(lang,text,id);//
             if (brkat>-1) {
