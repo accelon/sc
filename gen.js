@@ -17,7 +17,7 @@ export const gen=(pat,lang)=>{
     const books=booksOf(pat);
     books.forEach(book=>{
         const files=filesOfBook(book,datafolder);
-        console.log(files.slice(0,5),'total files',files.length);
+        console.log(files.join('\n'),'total files',files.length);
 
         //emit text according to id
         const idseq=fs.readFileSync('idseq/'+book+'.txt','utf8').split(/\r?\n/);
