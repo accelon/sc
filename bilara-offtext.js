@@ -44,7 +44,7 @@ export const bilara2offtext=(lang,idseq,bookjson,msdivs,inserts)=>{
             }
             const msdiv=msdivs[id]||'';
             let insert=inserts[id]||'';
-            if (insert) insert='^sc#'+id+insert;
+            if (msdiv) insert='^sc#'+id+insert;
             let addition=insert+(msdiv? ((parseInt(msdiv)?'^n':'')+msdiv):'');
 
             const brkat=breakseg(lang,text,id);//
@@ -63,5 +63,5 @@ export const bilara2offtext=(lang,idseq,bookjson,msdivs,inserts)=>{
         line='';
     }
 
-    return offtext
+    return offtext.trim();
 }

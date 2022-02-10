@@ -1,5 +1,4 @@
-import { fstat } from 'fs';
-import { filesFromPattern} from 'pitaka/cli'
+import { filesFromPattern, readTextContent} from 'pitaka/cli'
 export const sortFilenames=filenames=>{
 	return filenames.sort((f1,f2)=>{
 		const m2f1=f1.match(/(\d+)\.(\d+)/);
@@ -98,7 +97,7 @@ export const combineJSON=(files=[])=>{
         const fn=files[i];
         let json;
         try{
-            json=JSON.parse(fs.readFileSync(fn,'utf8'));
+            json=JSON.parse(readTextContent(fn));
         } catch(e) {
             throw e;
         }
@@ -112,4 +111,24 @@ export const combineJSON=(files=[])=>{
 
     }
     return out;
+}
+
+export const addMissingSectionMN10=(bookjson,dn2json)=>{
+    const newjson={},dn22={};
+    let start=false;
+    for (let key in dn2json) { //extract d22 dhammānupassanā saccapabba
+        if (key ==='dn22:17.3') start=true; //start of section
+        if (key ==='dn22:21.38') break; //end of section
+        if (start) dn22[key]=dn2json[key];
+    }
+    for (let key in bookjson) {
+        if (key=='mn10:44.3') { //replace mn10:44.3 with dn22 section
+            for (let addkey in dn22) {
+                newjson[addkey]=dn2json[addkey];
+            }
+        } else {
+            newjson[key]=bookjson[key];
+        }
+    }
+    return newjson;
 }

@@ -1,5 +1,5 @@
 /* */
-import {kluer, writeChanged,nodefs} from 'pitaka/cli'
+import {kluer, writeChanged,nodefs, readTextLines, readTextContent} from 'pitaka/cli'
 import { combineJSON, filesOfBook,pitakaOf,booksOf } from './bilara-folder.js';
 import {bilara2offtext} from './bilara-offtext.js'
 import inserts from './inserts.js'
@@ -15,14 +15,18 @@ export const gen=(pat,lang)=>{
     
 	console.log(datafolder,'pat',pat,yellow('data folder'),datafolder);
     const books=booksOf(pat);
+
     books.forEach(book=>{
         const files=filesOfBook(book,datafolder);
-        console.log(files.join('\n'),'total files',files.length);
+        if (book==='mn1') {
+            files.push('dn/dn22_root-pli-ms.json');
+        }
+        console.log(files.slice(0,5),'total files',files.length);
 
         //emit text according to id
-        const idseq=fs.readFileSync('idseq/'+book+'.txt','utf8').split(/\r?\n/);
+        const idseq=readTextLines('idseq/'+book+'.txt');
         //insert extra text
-        const msdiv=JSON.parse(fs.readFileSync('msdiv/'+book+'.json','utf8'));
+        const msdiv=JSON.parse(readTextContent('msdiv/'+book+'.json'));
     
         const bookjson=combineJSON(files.map(fn=>datafolder+fn));
         const offtext=bilara2offtext(lang,idseq,bookjson,msdiv,inserts);

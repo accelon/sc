@@ -29,6 +29,7 @@ const dofile=fn=>{
     // checkleadblank(srcfolder+fn,sclines);
     // checkleadblank(csfolder+fn,cslines);
     const fnpf=fn.replace(/\..+$/,'');
+
     const sc=toParagraphs(SC,fnpf);
     const cs=toParagraphs(CS,fnpf);
     if (sc.length!==cs.length) {
@@ -55,7 +56,7 @@ const dofile=fn=>{
         out.push(...sents  ) ;
     }
     const outstr=fixPunc(out.join('\n'));
-    if (writeChanged(desfolder+fn,outstr)) console.log('written',desfolder+fn);
+    if (writeChanged(desfolder+fn+'.ori',outstr)) console.log('written',desfolder+fn+'.ori');
 }
 const filelist= glob(srcfolder,pat);
 filelist.forEach(dofile);

@@ -8,7 +8,7 @@ const {yellow} =kluer;
 await nodefs
 const bilara_folder='../../github/bilara-data/';
 
-console.log(yellow('syntax'),'node gen-inserts [bkid/bkpf]');
+console.log(yellow('syntax'),'node gen-msdiv [bkid/bkpf]');
 const pat=process.argv[2]||'mn'
 const pitaka=pitakaOf(pat);
 
