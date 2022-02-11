@@ -41,22 +41,23 @@ const dofile=fn=>{
         const [id2,cslines]=cs[i];
         const problematic=[];
         if (id!==id2) throw "id unmatch "+id+ " "+id2;
+
         const breakpos=guidedBreak(id,sclines,cslines,problematic);
         let sents;
-
         if (!breakpos) {
             sents=autoBreak(cslines).sentences;
             sents[0]=failmarker+sents[0];
             // console.log('no breakpos')
         } else {
             sents=breakSentence(cslines,breakpos);
+            // if (id=="sn5.134-138") console.log(cs[i],sents);
         }
         ensureArrayLength(sents,sclines.length,failmarker)
         // sents=sents.map(it=>it.trim());
         out.push(...sents  ) ;
     }
     const outstr=fixPunc(out.join('\n'));
-    if (writeChanged(desfolder+fn+'.ori',outstr)) console.log('written',desfolder+fn+'.ori');
+    if (writeChanged(desfolder+fn+'.gen',outstr)) console.log('written',desfolder+fn+'.gen');
 }
 const filelist= glob(srcfolder,pat);
 filelist.forEach(dofile);

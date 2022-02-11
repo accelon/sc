@@ -9,6 +9,7 @@ export default { //將segment再切分
   "mn52:3.1":{ pli:"Ekamantaṁ" ,en:"sat",pn:"18"},
   "mn60:3.1":{ pli:"Ekamantaṁ" ,en:"The Buddha",pn:"93"}, 
   "mn66:5.1":{ pli:"Ekamantaṁ" ,en:"sat down",pn:"149"},
+  "sn7.2:2.1":{pli:"Evaṁ vutte",en:"When he",pn:"188"},
 }
 
 // 產生的 pli.id/mn2.js ， seg id 會重覆。

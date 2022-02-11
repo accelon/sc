@@ -44,6 +44,9 @@ export const bilara2offtext=(lang,idseq,bookjson,msdivs,inserts)=>{
             }
             const msdiv=msdivs[id]||'';
             let insert=inserts[id]||'';
+            if (inserts[id]&&typeof insert!=='string') {
+                insert=inserts[id][lang]||'';
+            }
             if (msdiv) insert='^sc#'+id+insert;
             let addition=insert+(msdiv? ((parseInt(msdiv)?'^n':'')+msdiv):'');
 

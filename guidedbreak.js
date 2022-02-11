@@ -30,8 +30,7 @@ export const guidedBreak=(loc,sclines_o,cslines_o,problematic)=>{
         }
     } 
     if (!pass && sclines.length && cslines.length){
-
-        const diffbreakpos=diffBreak(cslines.map(spacify), sclines.map(spacify));
+        const diffbreakpos=diffBreak(cslines.map(spacify), sclines.map(spacify),loc);
         const sents=breakSentence(cslines_o,diffbreakpos);
         const sim=paragraphSimilarity(sclines.map(spacify), sents.map(removeVariantBold).map(removeHeader).map(spacify) );
         if (sim<0.1) {
