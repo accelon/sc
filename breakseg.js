@@ -10,6 +10,9 @@ export default { //將segment再切分
   "mn60:3.1":{ pli:"Ekamantaṁ" ,en:"The Buddha",pn:"93"}, 
   "mn66:5.1":{ pli:"Ekamantaṁ" ,en:"sat down",pn:"149"},
   "sn7.2:2.1":{pli:"Evaṁ vutte",en:"When he",pn:"188"},
+  "sn46.54:7.1":{pli:"Atha kho mayaṁ",en:"",pn:"235"}, //no translation yet
+  "sn52.2:2.1":{pli:"Atha kho āyasmā mahāmoggallāno āyasmantaṁ",en:"and said",pn:"900"},
+  "an8.19:13.1":{pli:"Kiñcāpi",en:"Even if",pn:""},
 }
 
 // 產生的 pli.id/mn2.js ， seg id 會重覆。

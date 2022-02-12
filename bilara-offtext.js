@@ -60,7 +60,9 @@ export const bilara2offtext=(lang,idseq,bookjson,msdivs,inserts)=>{
                 offtext+= toProvident(text.substr(0,brkat),lang)+'\n';
                 text=text.substr(brkat);
             }
-            line+=(addition?addition+' ':'')+toProvident(text,lang);
+            //因 "an5.308-1152:4.1" 只加入了換行，如果只有換行符而不含標記，那不必補空白
+            const extraspace=(addition.indexOf('^')>-1?' ':''); //better check if compact tag
+            line+=((addition)?addition+extraspace:'')+toProvident(text,lang);
         }
         offtext+=line+'\n';
         line='';

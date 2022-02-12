@@ -22,7 +22,8 @@ books.forEach(book=>{
     const out=[];
     let combined='';
     Object.keys(bookjson).forEach(id=>{
-        if ( id.match(/[\.:]0\./)|| (id.match(/[\.:]0$/) && parseInt(bookjson[id]) )) {
+        if ( id.match(/[\.:]0\./)|| (id.match(/[\.:]0$/) && 
+        (parseInt(bookjson[id])|| bookjson[id]!=='Tassuddānaṁ') )) { //line with leading number and not Uddana has own line
             //is a header
             combined+=id+'\t';
         } else {
