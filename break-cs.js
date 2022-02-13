@@ -1,5 +1,5 @@
 import {nodefs,glob, writeChanged,readTextLines} from 'pitaka/cli';
-import {breakSentence,autoBreak,ensureArrayLength,toParagraphs} from "pitaka/utils";
+import {combineSentence,breakSentence,autoBreak,ensureArrayLength,toParagraphs} from "pitaka/utils";
 await nodefs; //export fs to global
 import { guidedBreak } from './guidedbreak.js';
 
@@ -30,8 +30,8 @@ const dofile=fn=>{
     // checkleadblank(csfolder+fn,cslines);
     const fnpf=fn.replace(/\..+$/,'');
 
-    const sc=toParagraphs(SC,fnpf);
-    const cs=toParagraphs(CS,fnpf);
+    const sc=toParagraphs(SC,{bkid:fn});
+    const cs=toParagraphs(CS,{bkid:fn,combine:true});
     if (sc.length!==cs.length) {
         throw "max paragraph number unmatch cs "+cs.length+ ",sc "+sc.length
     }

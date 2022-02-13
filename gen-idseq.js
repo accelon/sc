@@ -1,6 +1,6 @@
 /* generate id sequence of output offtext per book*/
 import {kluer, writeChanged,nodefs, readTextContent} from 'pitaka/cli'
-import { combineJSON, filesOfBook,pitakaOf,booksOf,addMissingSectionMN10 } from './bilara-folder.js';
+import { combineJSON, filesOfBook,pitakaOf,booksOf } from './bilara-folder.js';
 await nodefs
 const bilara_folder='../../github/bilara-data/';
 const desfolder='idseq/';
@@ -15,10 +15,10 @@ books.forEach(book=>{
     console.log(files.slice(0,5),'total files',files.length);
     let bookjson=combineJSON(files.map(fn=>datafolder+fn));
     
-    if (book==='mn1') {
-        const dn2files=filesOfBook('dn2',datafolder).filter(it=>it.indexOf("dn22")>-1);
-        bookjson=addMissingSectionMN10(bookjson, JSON.parse(readTextContent(datafolder+dn2files[0])));
-    }
+    //if (book==='mn1') {
+    //    const dn2files=filesOfBook('dn2',datafolder).filter(it=>it.indexOf("dn22")>-1);
+    //    bookjson=addMissingSectionMN10(bookjson, JSON.parse(readTextContent(datafolder+dn2files[0])));
+	//}
     const out=[];
     let combined='';
     Object.keys(bookjson).forEach(id=>{

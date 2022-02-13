@@ -18,9 +18,9 @@ export const gen=(pat,lang)=>{
 
     books.forEach(book=>{
         const files=filesOfBook(book,datafolder);
-        if (book==='mn1') {
-            files.push('dn/dn22_root-pli-ms.json');
-        }
+        //if (book==='mn1') {
+        //    files.push('dn/dn22_root-pli-ms.json');
+		//}
         console.log(files.slice(0,5),'total files',files.length);
 
         //emit text according to id

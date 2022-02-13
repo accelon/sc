@@ -112,7 +112,7 @@ export const combineJSON=(files=[])=>{
     }
     return out;
 }
-
+/*
 export const addMissingSectionMN10=(bookjson,dn2json)=>{
     const newjson={},dn22={};
     let start=false;
@@ -132,3 +132,4 @@ export const addMissingSectionMN10=(bookjson,dn2json)=>{
     }
     return newjson;
 }
+*/
