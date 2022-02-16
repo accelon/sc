@@ -259,7 +259,7 @@
 "an1.71:1.1":"^c#a1h",//71
 "an1.378-393:0.1":"\n",//SC missing trailer ekDmVmpALI sOLsmO।
 "an1.394:0.1":"\n",//SC missing trailer psAdkrDmVmvgVgO stVtrsmO।
-"an1.81:1.1":"^c#a1i",//81
+"an1.82:1.1":"^c#a1i",//82
 "an1.98:1.1":"^c#a1j",//98
 "an1.140:1.1":"^c#a1k",//140
 "an1.150:1.1":"^c#a1l",//150

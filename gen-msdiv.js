@@ -1,7 +1,8 @@
 /* generate sc_json_id: "insert command" per*/
 /* */
-import {kluer, writeChanged,nodefs} from 'pitaka/cli'
-import { combineJSON, filesOfBook,pitakaOf,booksOf } from './bilara-folder.js';
+import {kluer, writeChanged,nodefs} from 'pitaka/cli';
+import { combineJSON, filesOfBook} from './bilara-folder.js';
+import {pitakaOf,booksOf } from 'pitaka/csmeta';
 import fixmsdiv from './msdiv.js'; //msdiv has higher precedence
 
 const {yellow} =kluer;
@@ -24,7 +25,8 @@ const extractRefKey=(book,refjson,entry)=>{
         const at=v.indexOf(entry);
         if (at==-1) continue;
         const comma=v.indexOf(',',at);
-
+        //text after msdiv and before , are included , thus might use to inject text , \n 
+        //for example sn53.45:54:1.1 ^n935-966 and ^n967-967
         out[key]=v.substring(entry.length+at, comma>-1?comma: v.length);
     }
     return out;

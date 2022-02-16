@@ -1,6 +1,7 @@
 /* generate id sequence of output offtext per book*/
-import {kluer, writeChanged,nodefs, readTextContent} from 'pitaka/cli'
-import { combineJSON, filesOfBook,pitakaOf,booksOf } from './bilara-folder.js';
+import { writeChanged,nodefs} from 'pitaka/cli'
+import { combineJSON, filesOfBook } from './bilara-folder.js';
+import {pitakaOf,booksOf } from 'pitaka/csmeta';
 await nodefs
 const bilara_folder='../../github/bilara-data/';
 const desfolder='idseq/';
