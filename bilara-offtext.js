@@ -1,6 +1,7 @@
 
 import { fromIAST } from 'provident-pali';
 import Breakseg from  './breakseg.js';
+import {bookParanumToCluster} from 'pitaka/csmeta'
 const knowngap={
 	'an4.107:1.1':true, // VRI missing an4.106
 	'sn23.26:1.1':true,
@@ -27,7 +28,7 @@ const breakseg=(lang,text,id)=>{
 const toProvident=(str,lang)=>{
     return lang==='pli'?fromIAST(str):str;
 }
-export const bilara2offtext=(lang,idseq,bookjson,msdivs,inserts)=>{
+export const bilara2offtext=(lang,idseq,bookjson,msdivs,inserts,bkid)=>{
     let offtext='';
     for (let i=0;i<idseq.length;i++) {
         const idarr=idseq[i].split('\t');
@@ -47,7 +48,19 @@ export const bilara2offtext=(lang,idseq,bookjson,msdivs,inserts)=>{
             if (inserts[id]&&typeof insert!=='string') {
                 insert=inserts[id][lang]||'';
             }
-            if (msdiv) insert='^sc#'+id+insert;
+            if (msdiv) {
+                let cluster=bookParanumToCluster(bkid, msdiv)||'';
+                if (cluster) {
+                    let vagga='';
+                    const sep=(isNaN(parseInt(cluster))?'#':'');
+                    if (cluster.match(/\da$/)) {//first vagga
+                        vagga='^c'+sep+cluster.substr(0,cluster.length-1);
+                    }
+                    cluster= vagga+'^c'+sep+cluster;
+                }
+                insert= '^sc#'+id+insert+cluster;
+
+            }
             let addition=insert+(msdiv? ((parseInt(msdiv)?'^n':'')+msdiv):'');
 
             const brkat=breakseg(lang,text,id);//

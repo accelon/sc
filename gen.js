@@ -30,7 +30,7 @@ export const gen=(pat,lang)=>{
         const msdiv=JSON.parse(readTextContent('msdiv/'+book+'.json'));
     
         const bookjson=combineJSON(files.map(fn=>datafolder+fn));
-        const offtext=bilara2offtext(lang,idseq,bookjson,msdiv,inserts);
+        const offtext=bilara2offtext(lang,idseq,bookjson,msdiv,inserts,book);
         if (writeChanged(lang+'/'+book+'.off',offtext)) {
             console.log('written',book,offtext.length)
         }
