@@ -5,6 +5,7 @@
     "license": "CC0",
     "cluster":"c",
     "lang":"en",
+    "alignment":"cs",
     "locator":"bk.n",
     "textOnly":true,
     "removeLabels":"sc",
