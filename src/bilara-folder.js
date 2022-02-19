@@ -1,5 +1,5 @@
 import { readTextContent} from 'pitaka/cli'
-import { getFilesOfBook } from 'pitaka/csmeta';
+import { sc } from 'pitaka/meta';
 
 export const filesFolders={
     //need ? for matching folder
@@ -55,25 +55,4 @@ export const combineJSON=(files=[])=>{
     return out;
 }
 
-export const filesOfBook=(pat,rootfolder)=>getFilesOfBook(pat,filesFolders,rootfolder);
-/*
-export const addMissingSectionMN10=(bookjson,dn2json)=>{
-    const newjson={},dn22={};
-    let start=false;
-    for (let key in dn2json) { //extract d22 dhammānupassanā saccapabba
-        if (key ==='dn22:17.3') start=true; //start of section
-        if (key ==='dn22:21.38') break; //end of section
-        if (start) dn22[key]=dn2json[key];
-    }
-    for (let key in bookjson) {
-        if (key=='mn10:44.3') { //replace mn10:44.3 with dn22 section
-            for (let addkey in dn22) {
-                newjson[addkey]=dn2json[addkey];
-            }
-        } else {
-            newjson[key]=bookjson[key];
-        }
-    }
-    return newjson;
-}
-*/
+export const filesOfBook=(pat,rootfolder)=>sc.getFilesOfBook(pat,filesFolders,rootfolder);

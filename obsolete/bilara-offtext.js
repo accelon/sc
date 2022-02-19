@@ -1,7 +1,7 @@
-
+/* old code , use node template*/
 import { fromIAST } from 'provident-pali';
-import Breakseg from  './breakseg.js';
-import {bookParanumToCluster} from 'pitaka/csmeta'
+import {Breakseg,SEG_START,SEG_BREAK} from  './breakseg.js';
+import {cs} from 'pitaka/meta'
 const knowngap={
 	'an4.107:1.1':true, // VRI missing an4.106
 	'sn23.26:1.1':true,
@@ -32,9 +32,14 @@ export const bilara2offtext=(lang,idseq,bookjson,msdivs,inserts,bkid)=>{
     let offtext='';
     for (let i=0;i<idseq.length;i++) {
         const idarr=idseq[i].split('\t');
+        if (idarr.length==1 && (idseq[i][0]==SEG_START || idseq[i][0]==SEG_BREAK)) {
+            continue; 
+        }
         let line='';
         for (let i=0;i<idarr.length;i++) {
             const id=idarr[i];
+            //只是為了 idpar行數與off一致 ，折行在breakseg處理
+
 
             let text=bookjson[id]||'';
             if (!text) {
@@ -49,7 +54,7 @@ export const bilara2offtext=(lang,idseq,bookjson,msdivs,inserts,bkid)=>{
                 insert=inserts[id][lang]||'';
             }
             if (msdiv) {
-                let cluster=bookParanumToCluster(bkid, msdiv)||'';
+                let cluster=cs.bookParanumToCluster(bkid, msdiv)||'';
                 if (cluster) {
                     let vagga='';
                     const sep=(isNaN(parseInt(cluster))?'#':'');

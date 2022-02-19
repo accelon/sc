@@ -1,13 +1,15 @@
 /* generate id sequence of output offtext per book*/
 import { writeChanged,nodefs} from 'pitaka/cli'
-import { combineJSON, filesOfBook } from './bilara-folder.js';
-import {pitakaOf,booksOf } from 'pitaka/csmeta';
+import { combineJSON, filesOfBook } from './src/bilara-folder.js';
+import {sc } from 'pitaka/meta';
+import {Breakseg,SEG_START,SEG_BREAK} from './src/breakseg.js'; //see if a sc segment is break
+
 await nodefs
 const bilara_folder='../../github/bilara-data/';
-const desfolder='idseq/';
+const desfolder='idpar/';
 const pat=process.argv[2]||"mn";
 
-const pitaka=pitakaOf(pat);
+const pitaka=sc.pitakaOf(pat);
 const datafolder=bilara_folder+'root/pli/ms/'+pitaka+'/';   
 const books=booksOf(pat);
 books.forEach(book=>{
@@ -28,8 +30,10 @@ books.forEach(book=>{
             //is a header
             combined+=id+'\t';
         } else {
-            out.push(combined+id);
-            combined='';
+            const breaking=Breakseg[id]; //header cannot be break
+            out.push(combined+id);      //無論段號在折行前還是後，都要先輸出sc段號
+            if (breaking) out.push(breaking.pn?SEG_START:SEG_BREAK) //如果有pn，表示折行後才是段的開始
+            combined='';    
         }
     });
     if (combined) out.push(combined);

@@ -1,39 +1,30 @@
-/* */
+/* 依模版(template)產生符合 cs 格式的 offtext 檔 */
 import {kluer, writeChanged,nodefs, readTextLines, readTextContent} from 'pitaka/cli'
-import { pitakaOf,booksOf } from 'pitaka/csmeta';
+import { sc } from 'pitaka/meta';
 import { combineJSON, filesOfBook } from './bilara-folder.js';
-import {bilara2offtext} from './bilara-offtext.js'
-import inserts from './inserts.js'
+import {fillTemplate} from './filltemplate.js'
 const {yellow} =kluer;
 await nodefs
 const bilara_folder='../../github/bilara-data/';
-
+const template_folder='template/';
 console.log(yellow('syntax'),'node gen-[lang] [bkid/bkpf]');
 export const gen=(pat,lang)=>{
-	const pitaka=pitakaOf(pat);
+	const pitaka=sc.pitakaOf(pat);
 	const datafolder=bilara_folder+ {pli:'root/pli/ms/'+pitaka+'/', 
 	en:'translation/en/sujato/'+pitaka+'/',my:'translation/my/my-team/'+pitaka+'/'}[lang];
     
 	console.log(datafolder,'pat',pat,yellow('data folder'),datafolder);
-    const books=booksOf(pat);
+    const books=sc.booksOf(pat);
 
     books.forEach(book=>{
         const files=filesOfBook(book,datafolder);
-        //if (book==='mn1') {
-        //    files.push('dn/dn22_root-pli-ms.json');
-		//}
         console.log(files.slice(0,5),'total files',files.length);
-
-        //emit text according to id
-        const idseq=readTextLines('idseq/'+book+'.txt');
-        //insert extra text
-        const msdiv=JSON.parse(readTextContent('msdiv/'+book+'.json'));
-    
-        const bookjson=combineJSON(files.map(fn=>datafolder+fn));
-        const offtext=bilara2offtext(lang,idseq,bookjson,msdiv,inserts,book);
+        const template=readTextContent(template_folder+book+'.off');
+        const bookjson=combineJSON(files.map(fn=>datafolder+fn));        
+        // const offtext=bilara2offtext(lang,idseq,bookjson,msdiv,inserts,book);
+        const offtext=fillTemplate(template,bookjson,lang);
         if (writeChanged(lang+'/'+book+'.off',offtext)) {
             console.log('written',book,offtext.length)
         }
     })
-
 }

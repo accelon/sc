@@ -1,9 +1,9 @@
 /* generate sc_json_id: "insert command" per*/
 /* */
 import {kluer, writeChanged,nodefs} from 'pitaka/cli';
-import { combineJSON, filesOfBook} from './bilara-folder.js';
-import {pitakaOf,booksOf } from 'pitaka/csmeta';
-import fixmsdiv from './msdiv.js'; //msdiv has higher precedence
+import { combineJSON, filesOfBook} from './src/bilara-folder.js';
+import {sc} from 'pitaka/meta';
+import Errata from './src/msdiv-errata.js'; //higher precedence
 
 const {yellow} =kluer;
 await nodefs
@@ -11,15 +11,15 @@ const bilara_folder='../../github/bilara-data/';
 
 console.log(yellow('syntax'),'node gen-msdiv [bkid/bkpf]');
 const pat=process.argv[2]||'mn'
-const pitaka=pitakaOf(pat);
+const pitaka=sc.pitakaOf(pat);
 
 const reffolder=bilara_folder+'reference/pli/ms/'+pitaka+'/';
 console.log(reffolder,'pat',pat,yellow('ref folder'));
-const books=booksOf(pat);
+const books=sc.booksOf(pat);
 
 const extractRefKey=(book,refjson,entry)=>{
     const out={};
-    for (let newkey in fixmsdiv[book]) refjson[newkey]=fixmsdiv[book][newkey];
+    for (let newkey in Errata[book]) refjson[newkey]=Errata[book][newkey];
     for (let key in refjson) {
         const v=refjson[key];
         const at=v.indexOf(entry);
