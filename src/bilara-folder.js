@@ -23,7 +23,7 @@ export const filesFolders={
     sn1:["sn/sn{1-11}"] ,
     sn2:["sn/sn{12-21}"] ,
     sn3:["sn/sn{22-34}"] ,
-    sn4:["sn/sn{34-44}"] ,
+    sn4:["sn/sn{35-44}"] ,
     sn5:["sn/sn{45-56}"] ,
     an1:["an/an1$"],an2:["an/an2$"],an3:["an/an3$"],an4:["an/an4$"], an5:["an/an5$"],
     an6:["an/an6$"],an7:["an/an7$"],an8:["an/an8$"],an9:["an/an9$"], an10:["an/an10$"],an11:["an/an11$"],
@@ -31,26 +31,23 @@ export const filesFolders={
     // kp:["kn/kp/*"],snp:["kn/snp/vagg?"]//no translation yet
 }
 
-
-
 export const combineJSON=(files=[])=>{
     const out={};
     for (let i=0;i<files.length;i++){
         const fn=files[i];
         let json;
         try{
-            json=JSON.parse(readTextContent(fn));
+            if (fs.existsSync(fn)) json=JSON.parse(readTextContent(fn));
         } catch(e) {
             throw e;
         }
-        for (let key in json) {
+        if (json) for (let key in json) {
             if (out[key]) {
                 console.log('repeat json key '+key+ ' in '+fn.match(/([^\/]+)$/)[1]);
             } else {
                 out[key]=json[key];
             }
         }
-
     }
     return out;
 }

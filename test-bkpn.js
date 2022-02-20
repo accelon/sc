@@ -1,2 +1,2 @@
 import { cs } from "pitaka/csmeta";
-console.log(cs.bookParanumToCluster('sn1',"147"));
+console.log(cs.bookParanumToChunk('sn1',"147"));

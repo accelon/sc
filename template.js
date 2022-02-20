@@ -12,12 +12,13 @@ const {yellow} =kluer;
 const bilara_folder='../../github/bilara-data/';
 const desfolder='template/';
 const pat=process.argv[2]||"dn1";
+const nosub=process.argv[3]=='nosub';
 const pitaka=sc.pitakaOf(pat);
 const datafolder=bilara_folder+'root/pli/ms/'+pitaka+'/';   
 const reffolder=bilara_folder+'reference/pli/ms/'+pitaka+'/';
 const csfolder='../cs/off/';
 const books=sc.booksOf(pat);
-console.log(yellow('syntax'),'node template [bkid/bkpf]');
+console.log(yellow('syntax'),'node template [bkid/bkpf] [nosub]');
 const extractRefKey=(book,refjson,entry)=>{
     const out={};
     for (let newkey in Errata[book]) refjson[newkey]=Errata[book][newkey];
@@ -46,7 +47,7 @@ const referenceName=fn=>fn.replace(/_([^\.]+)/,'_reference');
 const getSubPara=bkid=>{
     const out={}// pn: [line_with_^n]
     const csbook=csfolder+bkid+'.off';
-    if (!fs.existsSync(csbook)) return null;
+    if (!fs.existsSync(csbook)) return {};
     const csparas = toParagraphs(readTextLines(csbook));
     csparas.forEach(cspara=>{
         const [pn,paralines]=cspara;
@@ -60,42 +61,50 @@ books.forEach(bkid=>{
     let bookjson=combineJSON(files.map(fn=>datafolder+fn));
     const refjson=combineJSON(files.map(fn=>reffolder+referenceName(fn)));
     const msdivs=extractRefKey(bkid,refjson,'msdiv');
-    let cspara=getSubPara(bkid); //取 cs 的無號段，純<p rend="body">，非必要
+    let cspara=!nosub&&getSubPara(bkid); //取 cs 的無號段，純<p rend="body">，非必要
 
     const out=[];
     let combined='', plcount=0, subpara=[];
     Object.keys(bookjson).forEach(id=>{
         const msdiv=msdivs[id]||'';
         let insert=Inserts[id]||'';
-        if (Inserts[id]&&typeof insert!=='string') {
-            insert=Inserts[id][lang]||'';
-        }
         plcount++;
         if (msdiv) {
-            let cluster=cs.bookParanumToCluster(bkid, msdiv)||'';
-            if (cluster) {
+            let chunk=cs.bookParanumToChunk(bkid, msdiv)||'';
+            if (chunk) {
                 let vagga='';
-                const sep=(isNaN(parseInt(cluster))?'#':'');
-                if (cluster.match(/\da$/)) {//first vagga
-                    vagga='^c'+sep+cluster.substr(0,cluster.length-1);
+                const sep=(isNaN(parseInt(chunk))?'#':'');
+                if (chunk.match(/\da$/)) {//first vagga
+                    vagga='^ck'+sep+chunk.substr(0,chunk.length-1);
                 }
-                cluster= vagga+'^c'+sep+cluster;
+                chunk= vagga+'^ck'+sep+chunk;
             }
-            insert+=cluster;
+            insert+=chunk;
             plcount=0; //start a new para with number
             subpara=cspara[msdiv]||[];
         }
-        let addition=(subpara.indexOf(plcount)>-1)?'^n ':'';
-        addition += insert+(msdiv? ((parseInt(msdiv)?'^n':'')+msdiv+' '):'');
+        let addition='';
+        //如果cs 版有無段號，輸出^n在行首，參考用
+        const hassubpara=(!combined&&subpara.indexOf(plcount)>-1)?'^n ':'';
+        if (insert.indexOf('\n')>-1) { //有新行
+            addition+=insert+hassubpara; //先輸出新行，再輸出可能的^n
+        } else {
+            addition+=hassubpara+insert; //^n 必在開頭
+        }
+        addition += (msdiv? ((parseInt(msdiv)?'^n':'')+msdiv+' '):'');
 
+        if (!combined&&id.endsWith(":0.1")) { //skip sutta number
+            return; //for shorter headings
+        }
         if ( id.match(/[\.:]0\./)|| (id.match(/[\.:]0$/) && 
-        (parseInt(bookjson[id])|| bookjson[id]!=='Tassuddānaṁ') )) { //line with leading number and not Uddana has own line
+        (parseInt(bookjson[id])|| !bookjson[id].includes("ddāna")) )) {  //
+            //line with leading number and not Uddana has own line, 
             //is a header
-            combined+=makeIDTag(id,addition);
+            combined+=makeIDTag(id,addition); //one more space for combined section
         } else {
             const breaking=Breakseg[id]; //header cannot be break
             out.push(combined+makeIDTag(id,addition,breaking));
-            combined='';    
+            combined='';
         }
     });
     if (combined) out.push(combined);

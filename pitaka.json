@@ -1,12 +1,13 @@
 {
-    "name":"sc",
-    "title": "Tipitaka in English|sc",
-    "description":"from SuttaCentral",
-    "template":"cs",
-    "lang":"en",
-    "label":"end,trailer,cite",
-    "labels":{
-    },
-    "homepage":"https://github.com/accelon/cs",
-    "files":"dn?.off,mn?.off,sn?.off,an?.off,an??.off"
+	"name":"sc",
+	"title": "Tipitaka in English|sc",
+	"description":"from SuttaCentral",
+	"template":"cs",
+	"lang":"en",
+	"label":"end,trailer,cite",
+	"labels":{
+	},
+	"homepage":"https://github.com/accelon/cs",
+	"rootdir":"en/",
+	"files":"dn?.off,mn?.off,sn?.off,an?.off,an??.off"
 }

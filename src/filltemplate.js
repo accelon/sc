@@ -10,10 +10,9 @@ export const fillTemplate=(template,bookjson,lang)=>{
             scid=m1.substr(0,at);
             attrs=parseAttrs(m1.substr(at+1));
         }
-        let t=bookjson[scid].trimRight();
-        if (typeof t=='undefined') {
-            console.error('scid',scid,'not found');
-            return '<'+m1+'>';
+        let t=bookjson[scid];
+        if (!t) {
+            return '';
         }
         if (lang==='pli') t=t.replace(/n([’”]+)ti/g,'$1nti');
         

@@ -63,11 +63,11 @@ export default {  //msdiv 與 vri div 不一致
         // "sn51.33-44:1.1": "msdiv845-888",//"845-856",
         // "sn53.1-12:1.1": "msdiv923-966",//"923-934",
 
-        "sn48.115-124:0.1":"msdiv553-586\n",
-        "sn48.137-146:0.1":"msdiv609-640",
-        "sn50.67-76:0.1":"msdiv771-791",
-        "sn51.77-86:0.1":"msdiv857-888\n",
-        "sn53.45-54:0.1":"msdiv935-966\n", //sn53.45-54:0.1 also inject 967-976, add \n to separate two ^n
+        "sn48.115-124:0.2":"msdiv553-586\n", // sn48.115-124:0.1 被去掉，見template.js搜尋 0:1
+        "sn48.137-146:0.2":"msdiv609-640",   //sn48.137-146:0.1
+        "sn50.67-76:0.2":"msdiv771-791",
+        "sn51.77-86:0.2":"msdiv857-888\n",
+        "sn53.45-54:0.2":"msdiv935-966\n", //sn53.45-54:0.1 also inject 967-976, add \n to separate two ^n
 
 //        "sn49.1-12:1.1": "msdiv651-672",//"651-662",
 		"sn49.13-22:1.1":"msdiv663-672",// pseudo paranum , //added in s0305m.mul <p rend="centre">(appamādavaggo sammappadhānavasena vitthāretabbo)।</p>			
