@@ -81,16 +81,19 @@ books.forEach(bkid=>{
             }
             insert+=chunk;
             plcount=0; //start a new para with number
-            subpara=cspara[msdiv]||[];
+            // subpara=cspara[msdiv]||[];
         }
-        let addition='';
-        //如果cs 版有無段號，輸出^n在行首，參考用
+        let addition=insert;
+        //如果cs 版有無段號，輸出^n在行首，參考用, sn5 s0d n759-770  輸出多餘的 ^n ，暫移除
+        /*
         const hassubpara=(!combined&&subpara.indexOf(plcount)>-1)?'^n ':'';
         if (insert.indexOf('\n')>-1) { //有新行
             addition+=insert+hassubpara; //先輸出新行，再輸出可能的^n
         } else {
             addition+=hassubpara+insert; //^n 必在開頭
         }
+        */
+
         addition += (msdiv? ((parseInt(msdiv)?'^n':'')+msdiv+' '):'');
 
         if (!combined&&id.endsWith(":0.1")) { //skip sutta number

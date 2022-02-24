@@ -18,7 +18,7 @@ export const gen=(pat,lang)=>{
 
     books.forEach(book=>{
         const files=filesOfBook(book,datafolder);
-        console.log(files.slice(0,5),'total files',files.length);
+        console.log('total files',files.length);
         const template=readTextContent(template_folder+book+'.off');
         const bookjson=combineJSON(files.map(fn=>datafolder+fn));        
         // const offtext=bilara2offtext(lang,idseq,bookjson,msdiv,inserts,book);
