@@ -31,6 +31,11 @@ export const filesFolders={
     // kp:["kn/kp/*"],snp:["kn/snp/vagg?"]//no translation yet
 }
 
+for (let i=1;i<=56;i++) filesFolders['s'+i]=['sn/sn'+i+'$'];
+for (let i=1;i<=34;i++) filesFolders['d'+i]=['dn/dn'+i+'_?'];
+for (let i=1;i<=152;i++) filesFolders['m'+i]=['mn/mn'+i+'_?'];
+for (let i=1;i<=11;i++) filesFolders['a'+i]=['an/an'+i+'$'];
+
 export const combineJSON=(files=[])=>{
     const out={};
     for (let i=0;i<files.length;i++){
@@ -52,4 +57,4 @@ export const combineJSON=(files=[])=>{
     return out;
 }
 
-export const filesOfBook=(pat,rootfolder)=>sc.getFilesOfBook(pat,filesFolders,rootfolder);
+export const filesOf=(pat,rootfolder)=>sc.getFilesOfBook(pat,filesFolders,rootfolder);

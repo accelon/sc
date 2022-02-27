@@ -9,10 +9,9 @@ import Inserts from './src/inserts.js'
 import { toParagraphs } from 'pitaka/utils';
 await nodefs
 const {yellow} =kluer;
-const bilara_folder='../../github/bilara-data/';
+const bilara_folder='./bilara-data/';
 const desfolder='template/';
 const pat=process.argv[2]||"dn1";
-const nosub=process.argv[3]=='nosub';
 const pitaka=sc.pitakaOf(pat);
 const datafolder=bilara_folder+'root/pli/ms/'+pitaka+'/';   
 const reffolder=bilara_folder+'reference/pli/ms/'+pitaka+'/';
@@ -44,24 +43,12 @@ const makeIDTag=(id,addition='',breakseg=null)=>{
     }
 }
 const referenceName=fn=>fn.replace(/_([^\.]+)/,'_reference');
-const getSubPara=bkid=>{
-    const out={}// pn: [line_with_^n]
-    const csbook=csfolder+bkid+'.off';
-    if (!fs.existsSync(csbook)) return {};
-    const csparas = toParagraphs(readTextLines(csbook));
-    csparas.forEach(cspara=>{
-        const [pn,paralines]=cspara;
-        out[pn]=paralines.map( (t,i)=> t.substr(0,3)=='^n '?i:-1).filter(i=>i!==-1);
-    });
-    return out;
-}
 books.forEach(bkid=>{
     let files=filesOfBook(bkid,datafolder);
     console.log(files.slice(0,5),'total files',files.length);
     let bookjson=combineJSON(files.map(fn=>datafolder+fn));
     const refjson=combineJSON(files.map(fn=>reffolder+referenceName(fn)));
     const msdivs=extractRefKey(bkid,refjson,'msdiv');
-    let cspara=!nosub&&getSubPara(bkid); //取 cs 的無號段，純<p rend="body">，非必要
 
     const out=[];
     let combined='', plcount=0, subpara=[];
@@ -81,18 +68,8 @@ books.forEach(bkid=>{
             }
             insert+=chunk;
             plcount=0; //start a new para with number
-            // subpara=cspara[msdiv]||[];
         }
         let addition=insert;
-        //如果cs 版有無段號，輸出^n在行首，參考用, sn5 s0d n759-770  輸出多餘的 ^n ，暫移除
-        /*
-        const hassubpara=(!combined&&subpara.indexOf(plcount)>-1)?'^n ':'';
-        if (insert.indexOf('\n')>-1) { //有新行
-            addition+=insert+hassubpara; //先輸出新行，再輸出可能的^n
-        } else {
-            addition+=hassubpara+insert; //^n 必在開頭
-        }
-        */
 
         addition += (msdiv? ((parseInt(msdiv)?'^n':'')+msdiv+' '):'');
 
