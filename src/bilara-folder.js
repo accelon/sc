@@ -1,5 +1,6 @@
 import { readTextContent} from 'pitaka/cli'
 import { sc } from 'pitaka/meta';
+import { SEGID_ERRATA } from './segid-errata.js';
 
 export const filesFolders={
     //need ? for matching folder
@@ -47,10 +48,12 @@ export const combineJSON=(files=[])=>{
             throw e;
         }
         if (json) for (let key in json) {
-            if (out[key]) {
+            let newkey=key;
+            if (SEGID_ERRATA[key]) newkey=SEGID_ERRATA[key];
+            if (out[newkey]) {
                 console.log('repeat json key '+key+ ' in '+fn.match(/([^\/]+)$/)[1]);
             } else {
-                out[key]=json[key];
+                out[newkey]=json[key];
             }
         }
     }

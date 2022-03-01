@@ -1,9 +1,9 @@
 /* 依模版(template)產生符合 cs 格式的 offtext 檔 */
 import {kluer, writeChanged,nodefs, readTextLines, readTextContent} from 'pitaka/cli'
 import { sc } from 'pitaka/meta';
-import { combineJSON, filesOfBook } from './bilara-folder.js';
+import { combineJSON, filesOf } from './bilara-folder.js';
 import {fillTemplate} from './filltemplate.js'
-const {yellow} =kluer;
+const {yellow,red} =kluer;
 await nodefs
 const bilara_folder='./bilara-data/';
 const template_folder='template/';
@@ -18,14 +18,18 @@ export const gen=(pat,lang)=>{
 
     books.forEach(book=>{
         const namespace=lang==='pli'?'.ms':'.sc';
-        const files=filesOfBook(book,datafolder);
-        console.log('total files',files.length);
+        const files=filesOf(book,datafolder);
+
         const template=readTextContent(template_folder+book+'.off');
         const bookjson=combineJSON(files.map(fn=>datafolder+fn));        
         // const offtext=bilara2offtext(lang,idseq,bookjson,msdiv,inserts,book);
         const offtext=fillTemplate(template,bookjson,lang);
+        const linecount=offtext.split('\n').length;
+        
         if (writeChanged(lang+'/'+book+namespace+'.off',offtext)) {
-            console.log('written',book,offtext.length)
+            console.log('written',book,'line count',linecount)
+        } else {
+            console.log('same',book,'line count',linecount)
         }
     })
 }
