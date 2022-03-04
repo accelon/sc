@@ -2,6 +2,7 @@
 import {kluer, writeChanged,nodefs, readTextLines, readTextContent} from 'pitaka/cli'
 import { sc } from 'pitaka/meta';
 import { combineJSON, filesOf } from './bilara-folder.js';
+import { SEGID_ERRATA } from './segid-errata.js';
 import {fillTemplate} from './filltemplate.js'
 const {yellow,red} =kluer;
 await nodefs
@@ -21,7 +22,7 @@ export const gen=(pat,lang)=>{
         const files=filesOf(book,datafolder);
 
         const template=readTextContent(template_folder+book+'.off');
-        const bookjson=combineJSON(files.map(fn=>datafolder+fn));        
+        const bookjson=combineJSON(files.map(fn=>datafolder+fn),SEGID_ERRATA);        
         // const offtext=bilara2offtext(lang,idseq,bookjson,msdiv,inserts,book);
         const offtext=fillTemplate(template,bookjson,lang);
         const linecount=offtext.split('\n').length;

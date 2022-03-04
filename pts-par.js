@@ -39,8 +39,8 @@ sutta.forEach(suttaid=>{
                     pass=true;
                 }
             } else {
-                const m=key.match(/:([\-\d]+)\.(\d+)$/); //two level
-                if (m) {
+                const m=key.match(/:(\d[\-\d]*)\.(\d+)$/); //two level
+                if (m) {                    
                     const [l0,n,vakya]=m;
                     if (parseInt(n) && parseInt(vakya)) {
                         suttaID[n]=parseInt(vakya);

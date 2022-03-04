@@ -1,8 +1,9 @@
 /*模版填入，特別要處理sc 的拆行*/
 import { parseAttrs } from "pitaka/offtext";
 import { fromIAST } from 'provident-pali';
-export const fillTemplate=(template,bookjson,lang)=>{
+export const fillTemplate=(template,bookjson,lang,opts={})=>{
     const conv=lang==='pli'?fromIAST:(a)=>a;
+    const extraHeader=opts.extraHeader;
     return template.replace(/<([^>]+)>/g,(m,m1)=>{
         const at=m1.indexOf(' ');
         let scid=m1, attrs;
@@ -11,6 +12,10 @@ export const fillTemplate=(template,bookjson,lang)=>{
             attrs=parseAttrs(m1.substr(at+1));
         }
         let t=bookjson[scid];
+        if (extraHeader&&scid.endsWith('.1')){
+           const h=bookjson[scid.replace(/\.1$/,'.0')];
+           if (h)t=h+t;
+        }
         if (!t) {
             return '';
         }

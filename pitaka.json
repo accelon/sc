@@ -1,7 +1,7 @@
 {
 	"name":"sc",
-	"title": "Tipitaka in English|sc",
-	"description":"from SuttaCentral",
+	"title": "SuttaCentral EN|sc",
+	"description":"English Translation from Suttacentral",
 	"template":"cs",
 	"lang":"en",
 	"label":"end,trailer,cite",
