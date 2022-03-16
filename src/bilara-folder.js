@@ -39,6 +39,7 @@ for (let i=1;i<=11;i++) filesFolders['a'+i]=['an/an'+i+'$'];
 
 export const combineJSON=(files=[],ERRATA)=>{
     const out={};
+
     for (let i=0;i<files.length;i++){
         const fn=files[i];
         let json;
@@ -56,6 +57,7 @@ export const combineJSON=(files=[],ERRATA)=>{
                 out[newkey]=json[key];
             }
         }
+
     }
     return out;
 }
