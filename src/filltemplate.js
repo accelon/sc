@@ -5,7 +5,7 @@ import { fromIAST } from 'provident-pali';
 export const fillTemplate=(template,bookjson,lang,opts={})=>{
     const conv=lang==='pli'?fromIAST:(a)=>a;
     const extraHeader=opts.extraHeader; //see bb/gen.js
-    const comments=opts.comments;
+    const comments=opts.comments||{};
     return template.replace(/<([^>]+)>/g,(m,m1)=>{
         const at=m1.indexOf(' ');
         let scid=m1, attrs;

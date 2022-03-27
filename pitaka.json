@@ -8,6 +8,7 @@
 	"labels":{
 	},
 	"homepage":"https://github.com/accelon/cs",
+	"notejson":"f",
 	"rootdir":"en/",
 	"files":"dn?.sc.off,mn?.sc.off,sn?.sc.off,an?.sc.off,an??.sc.off"
 }

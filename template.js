@@ -1,5 +1,5 @@
 /* 產生offtag加sc-id模版，的 create template for offtext generation */
-import { writeChanged,nodefs, kluer, readTextLines} from 'pitaka/cli'
+import { writeChanged,nodefs, kluer} from 'pitaka/cli'
 import { sc,cs} from 'pitaka/meta'
 import { combineJSON, filesOf } from './src/bilara-folder.js';
 import {Breakseg} from './src/breakseg.js'; //see if a sc segment is break
@@ -14,9 +14,9 @@ const pat=process.argv[2]||"dn1";
 const pitaka=sc.pitakaOf(pat);
 const datafolder=bilara_folder+'root/pli/ms/'+pitaka+'/';   
 const reffolder=bilara_folder+'reference/pli/ms/'+pitaka+'/';
-const csfolder='../cs/off/';
+
 const books=sc.booksOf(pat);
-console.log(yellow('syntax'),'node template [bkid/bkpf] [nosub]');
+console.log(yellow('syntax'),'node template [bkid]');
 const extractRefKey=(book,refjson,entry)=>{
     const out={};
     for (let newkey in Errata[book]) refjson[newkey]=Errata[book][newkey];
@@ -45,7 +45,8 @@ const makeIDTag=(id,addition='',breakseg=null)=>{
 const referenceName=fn=>fn.replace(/_([^\.]+)/,'_reference');
 books.forEach(bkid=>{
     let files=filesOf(bkid,datafolder);
-    console.log(files.slice(0,5),'total files',files.length);
+    console.log('first 3 files',files.slice(0,3),'\nlast file',files.slice(files.length-1))
+    console.log('total files',files.length);
     let bookjson=combineJSON(files.map(fn=>datafolder+fn));
     const refjson=combineJSON(files.map(fn=>reffolder+referenceName(fn)));
     const msdivs=extractRefKey(bkid,refjson,'msdiv');
