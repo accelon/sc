@@ -1,6 +1,5 @@
 /*模版填入，特別要處理sc 的拆行*/
-import { pinPos } from "pitaka/align";
-import { parseAttrs } from "pitaka/offtext";
+import { pinPos , parseAttributes} from "ptk/nodebundle.cjs";
 import { fromIAST } from 'provident-pali';
 export const fillTemplate=(template,bookjson,lang,opts={})=>{
     const conv=lang==='pli'?fromIAST:(a)=>a;
@@ -11,7 +10,7 @@ export const fillTemplate=(template,bookjson,lang,opts={})=>{
         let scid=m1, attrs;
         if (at>0) {
             scid=m1.substr(0,at);
-            attrs=parseAttrs(m1.substr(at+1));
+            attrs=parseAttributes(m1.substr(at+1));
         }
         let t=bookjson[scid];
         const comment=comments[scid];

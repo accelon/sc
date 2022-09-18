@@ -1,11 +1,9 @@
 /* 依模版(template)產生符合 cs 格式的 offtext 檔 */
-import {kluer, writeChanged,nodefs, readTextLines, readTextContent} from 'pitaka/cli'
-import { sc } from 'pitaka/meta';
+import { writeChanged,nodefs, readTextLines, pinNotes,readTextContent,sc} from 'ptk/nodebundle.cjs'
 import { combineJSON, filesOf } from './bilara-folder.js';
 import { SEGID_ERRATA } from './segid-errata.js';
 import {fillTemplate} from './filltemplate.js'
-import {pinNotes} from "pitaka/align";
-const {yellow,red} =kluer;
+import {yellow,red} from 'ptk/cli/colors.cjs';
 await nodefs
 const bilara_folder='./bilara-data/';
 const template_folder='template/';

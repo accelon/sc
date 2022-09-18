@@ -1,5 +1,4 @@
-import { readTextContent} from 'pitaka/cli'
-import { sc } from 'pitaka/meta';
+import { readTextContent,sc} from 'ptk/nodebundle.cjs'
 
 
 export const filesFolders={

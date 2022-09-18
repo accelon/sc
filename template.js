@@ -1,13 +1,12 @@
 /* 產生offtag加sc-id模版，的 create template for offtext generation */
-import { writeChanged,nodefs, kluer} from 'pitaka/cli'
-import { sc,cs} from 'pitaka/meta'
+import { writeChanged,nodefs, packOfftagAttrs, sc,cs} from 'ptk/nodebundle.cjs'
+import {yellow} from 'ptk/cli/colors.cjs'
 import { combineJSON, filesOf } from './src/bilara-folder.js';
 import {Breakseg} from './src/breakseg.js'; //see if a sc segment is break
 import Errata from './src/msdiv-errata.js'; //higher precedence
-import { packAttrs } from 'pitaka/offtext';
 import Inserts from './src/inserts.js'
 await nodefs
-const {yellow} =kluer;
+
 const bilara_folder='./bilara-data/';
 const desfolder='template/';
 const pat=process.argv[2]||"dn1";
@@ -34,8 +33,8 @@ const extractRefKey=(book,refjson,entry)=>{
 }
 const makeIDTag=(id,addition='',breakseg=null)=>{
     if (!breakseg) return addition+'<'+id+'>';
-    const endat=packAttrs(breakseg,{pn:true});
-    const startat=packAttrs(breakseg,{pn:true});
+    const endat=packOfftagAttrs(breakseg,{pn:true});
+    const startat=packOfftagAttrs(breakseg,{pn:true});
     if (breakseg.pn) { //下一行才輸出段號
         return '<'+id+' '+endat+'>\n'+addition+'<'+id+' '+startat+' copy="from">';
     } else {
