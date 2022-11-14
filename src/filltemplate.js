@@ -10,7 +10,8 @@ export const fillTemplate=(template,bookjson,lang,opts={})=>{
         let scid=m1, attrs;
         if (at>0) {
             scid=m1.substr(0,at);
-            attrs=parseAttributes(m1.substr(at+1));
+            // console.log(m1.substr(at))
+            attrs=parseAttributes(m1.substr(at)+" "); //why need extra space at then end??
         }
         let t=bookjson[scid];
         const comment=comments[scid];

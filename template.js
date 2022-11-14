@@ -42,6 +42,22 @@ const makeIDTag=(id,addition='',breakseg=null)=>{
     }
 }
 const referenceName=fn=>fn.replace(/_([^\.]+)/,'_reference');
+
+/*將msdiv段號  標題 的json key  dn1:1.1.1 改為 dn1:0.2 */
+const getChunkDivs=(msdivs,bookjson)=>{
+    const chunkDivs={};
+    for (let key in msdivs) {
+        const pnum=msdivs[key];
+        const at=key.indexOf(':1.1') //可能有 :1.1.1
+        if (key.endsWith(':1.1.1')||key.endsWith(':1.1')) {
+            const newkey=key.slice(0,at)+':0.2';
+            if (bookjson[newkey]) {
+                chunkDivs[newkey]=pnum;
+            }
+        }
+    }
+    return chunkDivs
+}
 books.forEach(bkid=>{
     let files=filesOf(bkid,datafolder);
     console.log('first 3 files',files.slice(0,3),'\nlast file',files.slice(files.length-1))
@@ -49,28 +65,31 @@ books.forEach(bkid=>{
     let bookjson=combineJSON(files.map(fn=>datafolder+fn));
     const refjson=combineJSON(files.map(fn=>reffolder+referenceName(fn)));
     const msdivs=extractRefKey(bkid,refjson,'msdiv');
+    const chunkdivs=getChunkDivs(msdivs,bookjson);
+
 
     const out=[];
-    let combined='', plcount=0, subpara=[];
+    let combined='',plcount=0,inchunktext=false;
     Object.keys(bookjson).forEach(id=>{
         const msdiv=msdivs[id]||'';
         let insert=Inserts[id]||'';
+        inchunktext=false;
         plcount++;
-        if (msdiv) {
-            let chunk=cs.bookParanumToChunk(bkid, msdiv)||'';
+        if (chunkdivs[id]) {
+            let chunk=cs.bookParanumToChunk(bkid, chunkdivs[id])||'';
             if (chunk) {
                 let vagga='';
                 const sep=(isNaN(parseInt(chunk))?'#':'');
                 if (chunk.match(/\da$/)) {//first vagga
-                    vagga='^ck'+sep+chunk.substr(0,chunk.length-1);
+                    vagga='^ck'+sep+chunk.substr(0,chunk.length-1)+'(';
                 }
-                chunk= vagga+'^ck'+sep+chunk;
+                chunk= vagga+'^ck'+sep+chunk+'(';
             }
             insert+=chunk;
+            inchunktext=true;
             plcount=0; //start a new para with number
         }
         let addition=insert;
-
         addition += (msdiv? ((parseInt(msdiv)?'^n':'')+msdiv+' '):'');
 
         if (!combined&&id.endsWith(":0.1")) { //skip sutta number
@@ -82,10 +101,12 @@ books.forEach(bkid=>{
             //is a header
             combined+=makeIDTag(id,addition); //one more space for combined section
         } else {
+            if (~addition.indexOf('^ck')) console.log(addition,combined)
             const breaking=Breakseg[id]; //header cannot be break
             out.push(combined+makeIDTag(id,addition,breaking));
             combined='';
         }
+        if (inchunktext) combined+=')' ; //closing the chunk
     });
     if (combined) out.push(combined);
     const desfn=desfolder+bkid+'.off';

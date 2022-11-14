@@ -1,8 +1,8 @@
 ﻿/*如果要補行，必須在最後 ，這樣 ^n 才會在下行的開頭 ，見 template.js hassubpara 部份*/
 export default {
-"dn1:1.1.1":"^bk#dn1",
-"dn14:1.1.1":"^bk#dn2",
-"dn24:1.1.1":"^bk#dn3",
+"dn1:0.2":"^bk#dn1",
+"dn14:0.2":"^bk#dn2",
+"dn24:0.2":"^bk#dn3",
 
 "mn1:1.1":"^bk#mn1",
 //"mn10:45.1": "^n120-135\n",  insert from dn22

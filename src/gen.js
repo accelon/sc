@@ -1,10 +1,10 @@
 /* 依模版(template)產生符合 cs 格式的 offtext 檔 */
-import { writeChanged,nodefs, readTextLines, pinNotes,readTextContent,sc} from 'ptk/nodebundle.cjs'
+import { writeChanged,nodefs, pinNotes,readTextContent,sc} from 'ptk/nodebundle.cjs'
 import { combineJSON, filesOf } from './bilara-folder.js';
 import { SEGID_ERRATA } from './segid-errata.js';
 import {fillTemplate} from './filltemplate.js'
 import {yellow,red} from 'ptk/cli/colors.cjs';
-await nodefs
+await nodefs;
 const bilara_folder='./bilara-data/';
 const template_folder='template/';
 console.log(yellow('syntax'),'node gen-[lang] [bkid/bkpf]');
@@ -31,6 +31,7 @@ export const gen=(pat,lang)=>{
 
     books.forEach(book=>{
         const namespace=lang==='pli'?'.ms':'.sc';
+        const outfolder=lang==='en'?'cs-sc.offtext/':'sc-pli.offtext/'
         const files=filesOf(book,datafolder);
         const template=readTextContent(template_folder+book+'.off');
         const bookjson=combineJSON(files.map(fn=>datafolder+fn),SEGID_ERRATA);
@@ -43,12 +44,12 @@ export const gen=(pat,lang)=>{
         if (comfolder) {
             const notes=genNotes(lines,comments);
             offtext=lines.join('\n');
-            const notefn=lang+'/'+book+'.notes.json';
+            const notefn=outfolder+'/'+book+'.notes.json';
             const noteout='['+notes.map( ([y,pin,val,id]) =>JSON.stringify({y,id,pin,val})).join(",\n")+']';
             writeChanged(notefn,noteout);    
         }
         const linecount=offtext.split('\n').length;        
-        if (writeChanged(lang+'/'+book+namespace+'.off',offtext)) {
+        if (writeChanged(outfolder+'/'+book+namespace+'.off',offtext)) {
             console.log('written',book,'line count',linecount)
         } else {
             console.log('same',book,'line count',linecount)
