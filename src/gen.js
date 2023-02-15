@@ -1,5 +1,5 @@
 /* 依模版(template)產生符合 cs 格式的 offtext 檔 */
-import { writeChanged,nodefs, pinNotes,readTextContent,sc} from 'ptk/nodebundle.cjs'
+import { writeChanged,nodefs, pinNotes,readTextContent,meta_sc} from 'ptk/nodebundle.cjs'
 import { combineJSON, filesOf } from './bilara-folder.js';
 import { SEGID_ERRATA } from './segid-errata.js';
 import {fillTemplate} from './filltemplate.js'
@@ -19,7 +19,7 @@ const genNotes=(lines,comments)=>{ //note marker in lines will be removed;
     return notes;
 }
 export const gen=(pat,lang)=>{
-	const pitaka=sc.pitakaOf(pat);
+	const pitaka=meta_sc.pitakaOf(pat);
     const translator= (pitaka=='vinaya')?'brahmali':'sujato';
 	const datafolder=bilara_folder+ {pli:'root/pli/ms/'+pitaka+'/', 
 	en:'translation/en/'+translator+'/'+pitaka+'/',my:'translation/my/my-team/'+pitaka+'/'}[lang];
@@ -27,11 +27,11 @@ export const gen=(pat,lang)=>{
     const comfolder=bilara_folder+ {en:'comment/en/'+translator+'/'+pitaka+'/'}[lang];
 
 	console.log(datafolder,'pat',pat,yellow('data folder'),datafolder);
-    const books=sc.booksOf(pat);
+    const books=meta_sc.booksOf(pat);
 
     books.forEach(book=>{
         const namespace=lang==='pli'?'.ms':'.sc';
-        const outfolder=lang==='en'?'cs-sc.offtext/':'sc-pli.offtext/'
+        const outfolder=lang==='en'?'off':'sc-pli.offtext/'
         const files=filesOf(book,datafolder);
         const template=readTextContent(template_folder+book+'.off');
         const bookjson=combineJSON(files.map(fn=>datafolder+fn),SEGID_ERRATA);

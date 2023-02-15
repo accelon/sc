@@ -1,4 +1,4 @@
-import { readTextContent,sc} from 'ptk/nodebundle.cjs'
+import { readTextContent,meta_sc} from 'ptk/nodebundle.cjs'
 
 
 export const filesFolders={
@@ -61,4 +61,4 @@ export const combineJSON=(files=[],ERRATA)=>{
     return out;
 }
 
-export const filesOf=(pat,rootfolder)=>sc.getFilesOfBook(pat,filesFolders,rootfolder);
+export const filesOf=(pat,rootfolder)=>meta_sc.getFilesOfBook(pat,filesFolders,rootfolder);

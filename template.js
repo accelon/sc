@@ -1,5 +1,5 @@
 /* 產生offtag加sc-id模版，的 create template for offtext generation */
-import { writeChanged,nodefs, packOfftagAttrs, sc,cs} from 'ptk/nodebundle.cjs'
+import { writeChanged,nodefs, packOfftagAttrs, meta_sc,meta_cs} from 'ptk/nodebundle.cjs'
 import {yellow} from 'ptk/cli/colors.cjs'
 import { combineJSON, filesOf } from './src/bilara-folder.js';
 import {Breakseg} from './src/breakseg.js'; //see if a sc segment is break
@@ -10,11 +10,11 @@ await nodefs
 const bilara_folder='./bilara-data/';
 const desfolder='template/';
 const pat=process.argv[2]||"dn1";
-const pitaka=sc.pitakaOf(pat);
+const pitaka=meta_sc.pitakaOf(pat);
 const datafolder=bilara_folder+'root/pli/ms/'+pitaka+'/';   
 const reffolder=bilara_folder+'reference/pli/ms/'+pitaka+'/';
 
-const books=sc.booksOf(pat);
+const books=meta_sc.booksOf(pat);
 console.log(yellow('syntax'),'node template [bkid]');
 const extractRefKey=(book,refjson,entry)=>{
     const out={};
@@ -76,7 +76,7 @@ books.forEach(bkid=>{
         inchunktext=false;
         plcount++;
         if (chunkdivs[id]) {
-            let chunk=cs.bookParanumToChunk(bkid, chunkdivs[id])||'';
+            let chunk=meta_cs.bookParanumToChunk(bkid, chunkdivs[id])||'';
             if (chunk) {
                 let vagga='';
                 const sep=(isNaN(parseInt(chunk))?'#':'');
