@@ -21,7 +21,7 @@ const genNotes=(lines,comments)=>{ //note marker in lines will be removed;
 export const gen=(pat,lang)=>{
 	const pitaka=meta_sc.pitakaOf(pat);
     const translator= (pitaka=='vinaya')?'brahmali':'sujato';
-	const datafolder=bilara_folder+ {pli:'root/pli/ms/'+pitaka+'/', 
+	const datafolder=bilara_folder+ {pli:'root/pli/ms/'+pitaka+'/', ro:'root/pli/ms/'+pitaka+'/',
 	en:'translation/en/'+translator+'/'+pitaka+'/',my:'translation/my/my-team/'+pitaka+'/'}[lang];
 
     const comfolder=bilara_folder+ {en:'comment/en/'+translator+'/'+pitaka+'/'}[lang];
@@ -30,8 +30,9 @@ export const gen=(pat,lang)=>{
     const books=meta_sc.booksOf(pat);
 
     books.forEach(book=>{
-        const namespace=lang==='pli'?'.ms':'.sc';
-        const outfolder=lang==='en'?'off':'sc-pli.offtext/'
+        const namespace=(lang==='pli'||lang==='ro')?'.ms':'.sc';
+        const outfolder=lang==='en'?'off':'sc-'+lang+'.offtext/'
+
         const files=filesOf(book,datafolder);
         const template=readTextContent(template_folder+book+'.off');
         const bookjson=combineJSON(files.map(fn=>datafolder+fn),SEGID_ERRATA);

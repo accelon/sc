@@ -23,7 +23,7 @@ export const fillTemplate=(template,bookjson,lang,opts={})=>{
         if (!t) {
             return '';
         }
-        if (lang==='pli') t=t.replace(/n([’”]+)ti/g,'$1nti');
+        if (lang==='pli'||lang==='ro') t=t.replace(/n([’”]+)ti/g,'$1nti');
         
         if (attrs) {
             const at= attrs[lang]?t.indexOf(attrs[lang]): 0; //some time en is missing , empty line

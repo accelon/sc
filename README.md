@@ -4,6 +4,7 @@
 ## 檔案說明
     template.js            產生模版
     gen-pl.js              產生巴利經文
+    gen-ro.js              產生巴利經文 羅馬轉寫  // 複製到 dhamma.github.io/sc-ro/ 供 accelon/aligner 使用
     gen-en.js              產生英譯經文
 
     以下檔案修改後再重新node template
