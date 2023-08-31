@@ -1,17 +1,17 @@
 ﻿/*如果要補行，必須在最後 ，這樣 ^n 才會在下行的開頭 ，見 template.js hassubpara 部份*/
 export default {
-"dn1:0.2":"^ak1(Long Discourses) ^bk#dn1(Long Discourse1) ",
+"dn1:0.2":"^ak#dn(Long Discourses) ^bk#dn1(Long Discourse1) ",
 "dn14:0.2":"^bk#dn2(Long Discourse2) ",
 "dn24:0.2":"^bk#dn3(Long Discourse3) ",
 
-"mn1:1.1":"^bk#mn1",
+"mn1:1.1":"^ak#mn(Middle Discourses) ^bk#mn1",
 //"mn10:45.1": "^n120-135\n",  insert from dn22
 // "mn50:33.0":{pli:"sAlEyVyvgVgO nIWVXItO pYVcmO.\n",en:""}, //VRI 有，MS無
 
 "mn50:33.0":"\n", //missing "sAlEyVyvgVgO nIWVXItO pYVcmO.\n"
 "mn51:1.1":"^bk#mn2",
 "mn101:1.1":"^bk#mn3",
-	
+"sn1.1:0.2":"^ak#sn(Connected Discourses)",
 "sn1.1:1.1":"^bk#sn1",
 "sn12.1:1.1":"^bk#sn2",
 "sn14.1:0.1":"\n",// sc missing ^n ^trailer aBIsmysMyUtVtM smtVtM।
@@ -21,6 +21,7 @@ export default {
 "sn45.1:1.1":"^bk#sn5",
 "sn50.55-66:0.1":"\n\n\n\n\n", //SC missing uddana for sn50 5. Oghavagga 
 //missing sn55
+"an1.1:0.2":"^ak#an(Numbered Discourses)",
 "an1.1:1.1":"^bk#an1",
 "an1.378-393:0.1":"\n",//SC missing trailer ekDmVmpALI sOLsmO।
 "an1.394:0.1":"\n",//SC missing trailer psAdkrDmVmvgVgO stVtrsmO।

@@ -1,0 +1,13 @@
+﻿sn5. swap 
+[
+  4806,
+  0,
+  "gNVgApEyVyAlvgVgO pXmO. ",
+  " (smVmpVpDAnsMyUtVtsVs gNVgApEyVyAlII smVmpVpDAnvsEn vItVTArEtbVbA)।"
+ ],
+ [
+  4807,
+  0,
+  "(smVmpVpDAnsMyUtVtsVs gNVgApEyVyAlII smVmpVpDAnvsEn vItVTArEtbVbA.) ",
+  "^n ^end gNVgApEyVyAlvgVgO pXmO।"
+ ],

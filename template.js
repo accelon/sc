@@ -5,6 +5,7 @@ import { combineJSON, filesOf } from './src/bilara-folder.js';
 import {Breakseg} from './src/breakseg.js'; //see if a sc segment is break
 import Errata from './src/msdiv-errata.js'; //higher precedence
 import Inserts from './src/inserts.js'
+import {getFirstVaggaGroupName} from './groupname.js'
 await nodefs
 
 const bilara_folder='./bilara-data/';
@@ -77,13 +78,20 @@ books.forEach(bkid=>{
         plcount++;
         if (chunkdivs[id]) {
             let chunk=meta_cs.bookParanumToChunk(bkid, chunkdivs[id])||'';
+            let cktag='^ck';
+            if (chunk.match(/^s\d+[a-z]+/)) cktag+='sn'; //^cksn 
+            if (chunk.match(/^a\d+[a-z]+/)) cktag+='an'; //^cksn 
             if (chunk) {
                 let vagga='';
                 const sep=(isNaN(parseInt(chunk))?'#':'');
-                if (chunk.match(/\da$/)) {//first vagga
-                    vagga='^ck'+sep+chunk.substr(0,chunk.length-1)+'(';
+
+                if (bkid.match(/^an\d/)||bkid.match(/^sn\d/)) {
+                    if (chunk.match(/\da$/)) {//first vagga
+                        const section=chunk.substr(0,chunk.length-1); //samyutta or anga with vagga
+                        vagga='^ck'+sep+section+'('+getFirstVaggaGroupName(bkid,section)+')';
+                     }
                 }
-                chunk= vagga+'^ck'+sep+chunk+'(';
+                chunk= vagga+cktag+sep+chunk+'(';
             }
             insert+=chunk;
             inchunktext=true;
@@ -110,7 +118,6 @@ books.forEach(bkid=>{
     });
     if (combined) out.push(combined);
     const desfn=desfolder+bkid+'.off';
-    if (writeChanged(desfn,out.join("\n"))) {
-        console.log('written',desfn,out.length,'id')
-    }
+    writeChanged(desfn,out.join("\n"),true)
+
 })
