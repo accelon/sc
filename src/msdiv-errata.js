@@ -48,7 +48,23 @@ export default {  //msdiv 與 vri div 不一致
         "an4.106:1.1": "msdiv106", //no root and translated text
     },
     sn3:{
+
+
         "sn23.25:1.1":"msdiv184", //missing in sn23.23-33_reference
+
+    	"sn34.46:1.9":"", // chacattālīsamaṃ belongs to 707
+    	"sn34.47:1.1":"msdiv708",
+        "sn34.47:1.3":"",
+        "sn34.48:1.1":"msdiv709", //Samādhismiṁ
+        "sn34.48:1.2":"",
+        "sn34.49:1.1":"msdiv710",//Samādhismiṁ
+
+        "sn34.50:1.8":"",
+        "sn34.51:1.1":"msdiv712",
+        "sn34.51:1.2":"",
+        "sn34.52:1.1":"msdiv713",
+        "sn34.53:1.8":"",
+        "sn34.54:1.1":"msdiv715",
     },
     sn5:{
         "sn45.170:2.1":"msdiv171",
