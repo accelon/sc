@@ -28,7 +28,13 @@ const extractRefKey=(book,refjson,entry)=>{
         const comma=v.indexOf(',',at);
         //text after msdiv and before , are included , thus might use to inject text , \n 
         //for example sn53.45:54:1.1 ^n935-966 and ^n967-967
+
         out[key]=v.substring(entry.length+at, comma>-1?comma: v.length);
+
+        //redundant .1
+        if (book.slice(0,2)=='an' && out[key].indexOf('.1')) {
+            out[key]=out[key].replace('.1','')
+        }
     }
     return out;
 }
@@ -73,6 +79,7 @@ books.forEach(bkid=>{
     let combined='',plcount=0,inchunktext=false;
     Object.keys(bookjson).forEach(id=>{
         const msdiv=msdivs[id]||'';
+
         let insert=Inserts[id]||'';
         inchunktext=false;
         plcount++;
@@ -99,7 +106,8 @@ books.forEach(bkid=>{
         }
         let addition=insert;
         addition += (msdiv? ((parseInt(msdiv)?'^n':'')+msdiv+' '):'');
-
+        
+        
         if (!combined&&id.endsWith(":0.1")) { //skip sutta number
             return; //for shorter headings
         }
