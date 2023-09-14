@@ -32,7 +32,7 @@ const extractRefKey=(book,refjson,entry)=>{
         out[key]=v.substring(entry.length+at, comma>-1?comma: v.length);
 
         //redundant .1
-        if (book.slice(0,2)=='an' && out[key].indexOf('.1')) {
+        if (book.slice(0,2)=='an' && ~out[key].indexOf('.1')) {
             out[key]=out[key].replace('.1','')
         }
     }
@@ -79,6 +79,9 @@ books.forEach(bkid=>{
     let combined='',plcount=0,inchunktext=false;
     Object.keys(bookjson).forEach(id=>{
         const msdiv=msdivs[id]||'';
+        if (~msdiv.indexOf('.')) {
+            console.log("wrong msdiv",msdiv)
+        }
 
         let insert=Inserts[id]||'';
         inchunktext=false;
