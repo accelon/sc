@@ -48,10 +48,7 @@ export default {  //msdiv 與 vri div 不一致
         "an4.106:1.1": "msdiv106", //no root and translated text
     },
     sn3:{
-
-
         "sn23.25:1.1":"msdiv184", //missing in sn23.23-33_reference
-
     	"sn34.46:1.9":"", // chacattālīsamaṃ belongs to 707
     	"sn34.47:1.1":"msdiv708",
         "sn34.47:1.3":"",
